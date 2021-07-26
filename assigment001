@@ -1,0 +1,268 @@
+package coscProgramming3;
+
+
+//all the imports we need
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeMap;
+
+public class AmanAssignment1 {
+
+
+
+
+/**
+*
+*  this is our main method for calling every function and class
+*
+* @param array of strings containg command line argument
+* @return returns amanList, amanMap
+*
+*/
+
+
+
+
+
+public static void main(String[] args) throws FileNotFoundException
+{
+//for creating list  
+List<String> amanList = AmanCreateList();
+
+//capatilizing all the words
+AmanProcessList(amanList);
+
+//for creating set and printing it
+Set<String> amanSet = amanCreateSet(amanList);
+
+// Map<String, Integer> amanMap = amanCreateMap(String amanList, Integer numberOfTimesWordIsFound );
+
+//for creating map and printing it as per given requirement
+Map<String, Integer> amanMap = amanCreateMap(amanList, amanSet);
+System.out.println(amanMap);
+}
+
+/**
+*
+* This class uses recursion to recieve string parameter and change it to upper
+* case words
+*
+*
+* @author Aman Regmi
+* @version 1.0
+*
+*/
+
+public static String AmanRecursion(String forEveryWord)
+{
+
+/*
+* The function of this class which will change a small cap to a large cap, e.g.
+* a to A, b to B, etc)
+*
+* @param String forEveryWord is taking every word present there
+*
+* @return is returing our required uppercase words
+*
+*/
+if (forEveryWord.length() == 0)
+{
+return forEveryWord;
+}
+return Character.toUpperCase(forEveryWord.charAt(0)) + AmanRecursion(forEveryWord.substring(1));
+}
+
+/**
+*
+* This class has A method that reads words from the Assingment1Data.txt file
+* that we are provided and store them into a list called amanList
+*
+*
+* @author Aman Regmi
+* @version 1.0
+*
+*/
+public static List<String> AmanCreateList()
+{
+Scanner givenTextFile = null;
+try
+{
+givenTextFile = new Scanner(
+new File("C:\\Users\\amane\\eclipse-workspace\\AmanAssignment1\\src\\Assingment1Data.txt"));
+} catch (FileNotFoundException e) {
+// TODO Auto-generated catch block
+e.printStackTrace();
+}
+
+/*
+* The function of this class is to put all the elements of the given text file
+* into amanList and Print the message “LIST” along with all the elements from
+* amanList one element per line
+*
+* @param text file
+*
+* @return is returing our required list (one element on each line)
+*
+*/
+
+
+//// creates a list for the words from Assignment1Data.txt file that we have
+List<String> amanList = new ArrayList<String>();
+
+while (givenTextFile.hasNext()) {
+amanList.add(givenTextFile.next());
+
+}
+// prints the elements one each per line from the list
+System.out.println("LIST");
+amanList.forEach(System.out::println);
+// this will reurutns all the words
+return amanList;
+
+}
+
+/**
+*
+* This class has A method that processes each element from the amanList that is
+* created above, to capitalized them using the first method amanRecursion
+* method and replace the word with the capitalized word. one element per line.
+*
+* @author Aman Regmi
+* @version 1.0
+*
+*/
+
+public static void AmanProcessList(List<String> amanList)
+{
+
+/*
+* The function of this class is to put all the elements of the given text file
+* into amanList and Print the message “LIST” along with all the elements from
+* amanList one element per line
+*
+* @param amanList
+*
+* @return is returing our required capatilized list (one element on each line)
+*
+*/
+for (int i = 0; i < amanList.size(); i++) {
+
+// uses our reurcsion method
+amanList.set(i, AmanRecursion(amanList.get(i)));
+}
+
+System.out.println("CAPITALIZED LIST");
+
+
+for (String wordsToBeChangedToUppercase : amanList) {
+// processes the list that we have above and makes to upper case using recursion
+System.out.println(wordsToBeChangedToUppercase);
+}
+}
+
+/**
+*
+* This class processes each element from the capitalized amanList(above) and
+* add the unique capitalized words to a Set data structure called amanSet
+* (returns the unique elements in the list as hashset one element per line
+*
+* @author Aman Regmi
+* @version 1.0
+*
+*/
+
+public static Set<String> amanCreateSet(List<String> amanList)
+{
+
+Set<String> amanSet = new HashSet<String>();
+
+/*
+* The function of this class will create set for uniquecapatlized words and
+* Print the message “SET” and all the elements from amanSet one element per
+* line.
+*
+*
+* @param amanList
+*
+* @return is returing our required set amanSet
+*
+*/
+
+for (String wordsToBeChanged : amanList)
+{
+amanSet.add(wordsToBeChanged);
+}
+
+// prints the words as per requirement by using set
+System.out.println("SET");
+for (String word : amanSet) {
+System.out.println(word);
+
+}
+// returns the set
+return amanSet;
+}
+
+/**
+*
+* This class will process and count how many times a unique word appears in
+* amanSet and will print the number of times the element occurs
+*
+* @author Aman Regmi
+* @version 1.0
+*
+*/
+
+public static Map<String, Integer> amanCreateMap(List<String> amanList, Set<String> amanSet)
+throws FileNotFoundException
+{
+// created the new map
+Map<String, Integer> amanMap = new HashMap<>();
+
+/*
+* The function of this method is to count how many times that one sepcific
+* element occur in the capitalized amanList above
+*
+*
+* @param amanList, aman set
+*
+* @return is returing our specific string and required number of times that
+* string appears
+*
+*
+*
+*/
+for (String wordThatIsAppearing : amanSet)
+{
+
+int numberOfTimesWordIsFound = 0;
+
+// // find the occurrences of certain specific word in the list
+
+for (String listWord : amanList) {
+if (listWord.equals(wordThatIsAppearing))
+numberOfTimesWordIsFound++;
+}
+amanMap.put(wordThatIsAppearing, numberOfTimesWordIsFound);
+}
+
+System.out.println("MAP");
+for (Map.Entry<String, Integer> particularEntryValue : amanMap.entrySet())
+{
+
+System.out.printf("%-40s =  %-40d\n", particularEntryValue.getKey(), particularEntryValue.getValue());
+
+}
+
+return amanMap;
+
+}
+
+}
